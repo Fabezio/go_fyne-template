@@ -3,11 +3,14 @@ package main
 import (
 	"fmt"
 	colors "fyne-test/helpers"
+	"math/rand"
+	"time"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/widget"
 )
 
 var title = "fyne tutorial"
@@ -18,31 +21,21 @@ var w size = 800
 var h size = 450
 
 func makeEnv() {
-	var mainDisplay *fyne.Container
-	// var secDisplay *fyne.Container
-	fmt.Printf("%T\n", mainDisplay)
-	hori := true
-	heading := canvas.NewText("This is my title", colors.Black)
-	parag := canvas.NewText("This is my paragraph", colors.Black)
-	line := canvas.NewLine(colors.Gray)
-	line.StrokeWidth = 2
-	horiBox := container.NewHBox(
-		heading,
-		line,
-		parag,
-	)
-	vertBox := container.NewVBox(
-		heading,
-		line,
-		parag,
-	)
-	if hori {
-		win.SetContent(horiBox) // will display from top left to bottom right
+	heading := canvas.NewText("Random Nb Gen", colors.Black)
+	heading.TextSize = 40
+	btn := widget.NewButton("click here to generate a number", func() {
+		fmt.Println("generating...")
 
-	} else {
-		win.SetContent(vertBox) // will display from top left to bottom right
+		time.Sleep(250 * time.Millisecond)
+		rand := rand.Intn(100)
+		fmt.Println(rand)
+		heading.Text = fmt.Sprintf("number is %v", rand)
+		heading.Color = colors.Orange
+		heading.Refresh()
+	})
 
-	}
+	cont := container.NewVBox(btn, heading)
+	win.SetContent(cont)
 
 }
 
