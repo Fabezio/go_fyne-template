@@ -1,17 +1,19 @@
 package main
 
 import (
+	colors "fyne-test/helpers"
+	"image/color"
+
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/canvas"
 )
 
 func makeEnv() {
-	img := "assets/tux.png"
-	curPath := "/Users/fabriceriquet/Documents/dev/go/test-fyne/"
-	file := canvas.NewImageFromFile(curPath + img)
-
-	win.SetContent(file)
+	rect := canvas.NewRectangle(colors.Orange)
+	rect.StrokeColor = color.Black
+	rect.StrokeWidth = 2
+	win.SetContent(rect)
 
 }
 
