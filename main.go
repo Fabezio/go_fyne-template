@@ -2,19 +2,25 @@ package main
 
 import (
 	colors "fyne-test/helpers"
-	"image/color"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/canvas"
+	"fyne.io/fyne/v2/container"
 )
 
 func makeEnv() {
-	circle := canvas.NewCircle(colors.Orange)
-	circle.StrokeColor = color.Black
-	circle.StrokeWidth = 2
+	hori := true
+	line := canvas.NewLine(colors.Gray)
 
-	win.SetContent(circle)
+	line.StrokeWidth = 2
+	layout := container.NewVBox(line)
+	// choose if you want to display a single line or in a box (hozizontal line)
+	if hori {
+		win.SetContent(layout) // will display a separation line
+	} else {
+		win.SetContent(line) // will display from top left to bottom right
+	}
 
 }
 
