@@ -1,26 +1,16 @@
 package main
 
 import (
-	colors "fyne-test/helpers"
-
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
-	"fyne.io/fyne/v2/canvas"
-	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/theme"
+	"fyne.io/fyne/v2/widget"
 )
 
 func makeEnv() {
-	hori := true
-	line := canvas.NewLine(colors.Gray)
+	icon := widget.NewIcon(theme.AccountIcon())
 
-	line.StrokeWidth = 2
-	layout := container.NewVBox(line)
-	// choose if you want to display a single line or in a box (hozizontal line)
-	if hori {
-		win.SetContent(layout) // will display a separation line
-	} else {
-		win.SetContent(line) // will display from top left to bottom right
-	}
+	win.SetContent(icon) // will display from top left to bottom right
 
 }
 
