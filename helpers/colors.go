@@ -8,6 +8,7 @@ const max = 255
 
 var Black = color.Black
 var White = color.White
+var Gray = color.NRGBA{R: 127, G: 127, B: 127, A: max}
 var Green = color.NRGBA{R: 0, G: max, B: 0, A: max}
 var Blue = color.NRGBA{R: 0, G: 0, B: max, A: max}
 var Teal = color.NRGBA{R: 0, G: 127, B: 127, A: max}
