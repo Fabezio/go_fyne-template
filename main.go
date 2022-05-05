@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	colors "fyne-test/helpers"
 	"image/color"
 
@@ -15,36 +14,31 @@ import (
 func makeEnv() {
 	black := color.Black
 	gray := colors.Gray
+	parag := canvas.NewText("select your gender", black)
+	checkbox := widget.NewCheck("you're a male", func(b bool) {
 
-	parag := canvas.NewText("This is a paragraph", black)
-	btn := widget.NewButton("click me", func() {
-		fmt.Printf("%T \n", gray)
-		changeProps(parag, "you did it", colors.Orange)
-		// parag.Text = "Well done!"
-		// parag.Color = colors.Teal
-		// parag.Refresh()
+		parag.Refresh()
+		if b {
+			parag.Text = "exactly"
+		} else {
+			parag.Text = "No, i'm a girl"
+
+		}
+		parag.Refresh()
 	})
 	heading := canvas.NewText("Welcome", black)
 	heading.TextSize = 30
-	// label := widget.NewLabel("Hello World !")
+
 	line := canvas.NewLine(gray)
 	// make vertical layout (VBox)
 	layout := container.NewVBox(
-		btn,
+		checkbox,
 		heading,
 		line,
 		parag,
 	)
 	win.SetContent(layout)
 
-}
-
-// func changeProps(p *canvas.Text, txt string, col color.Gray16) {
-func changeProps(p *canvas.Text, txt string, col color.NRGBA) {
-	p.Text = txt
-	p.Color = col
-	p.Refresh()
-	// return p
 }
 
 type size = float32
