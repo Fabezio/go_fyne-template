@@ -3,6 +3,7 @@ package main
 import (
 	colors "fyne-test/helpers"
 	"image/color"
+	"net/url"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
@@ -14,28 +15,20 @@ import (
 func makeEnv() {
 	black := color.Black
 	gray := colors.Gray
-	parag := canvas.NewText("select your gender", black)
-	checkbox := widget.NewCheck("you're a male", func(b bool) {
-
-		parag.Refresh()
-		if b {
-			parag.Text = "exactly"
-		} else {
-			parag.Text = "No, i'm a girl"
-
-		}
-		parag.Refresh()
-	})
-	heading := canvas.NewText("Welcome", black)
+	heading := canvas.NewText("visit my website", black)
 	heading.TextSize = 30
-
 	line := canvas.NewLine(gray)
+
+	// parag := canvas.NewText("select your gender", black)
+	url, _ := url.Parse("https://github.com/Fabezio")
+	hyperlink := widget.NewHyperlink("my github repos", url)
+
 	// make vertical layout (VBox)
 	layout := container.NewVBox(
-		checkbox,
+
 		heading,
 		line,
-		parag,
+		hyperlink,
 	)
 	win.SetContent(layout)
 
@@ -43,7 +36,7 @@ func makeEnv() {
 
 type size = float32
 
-var title = "First fyne app"
+var title = "a mere http url"
 var a = app.New()
 var win = a.NewWindow(title)
 var w size = 400
