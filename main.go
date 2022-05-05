@@ -10,10 +10,11 @@ import (
 )
 
 func makeEnv() {
-	rect := canvas.NewRectangle(colors.Orange)
-	rect.StrokeColor = color.Black
-	rect.StrokeWidth = 2
-	win.SetContent(rect)
+	circle := canvas.NewCircle(colors.Orange)
+	circle.StrokeColor = color.Black
+	circle.StrokeWidth = 2
+
+	win.SetContent(circle)
 
 }
 
@@ -22,8 +23,8 @@ type size = float32
 var title = "a mere http url"
 var a = app.New()
 var win = a.NewWindow(title)
-var w size = 640
-var h size = 768
+var w size = 500
+var h size = 500
 
 func main() {
 	launchApp()
