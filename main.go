@@ -18,10 +18,11 @@ func makeEnv() {
 
 	parag := canvas.NewText("This is a paragraph", black)
 	btn := widget.NewButton("click me", func() {
-		fmt.Println("yea!")
-		parag.Text = "Well done!"
-		parag.Color = colors.Teal
-		parag.Refresh()
+		fmt.Printf("%T \n", gray)
+		changeProps(parag, "you did it", colors.Orange)
+		// parag.Text = "Well done!"
+		// parag.Color = colors.Teal
+		// parag.Refresh()
 	})
 	heading := canvas.NewText("Welcome", black)
 	heading.TextSize = 30
@@ -36,6 +37,14 @@ func makeEnv() {
 	)
 	win.SetContent(layout)
 
+}
+
+// func changeProps(p *canvas.Text, txt string, col color.Gray16) {
+func changeProps(p *canvas.Text, txt string, col color.NRGBA) {
+	p.Text = txt
+	p.Color = col
+	p.Refresh()
+	// return p
 }
 
 type size = float32
