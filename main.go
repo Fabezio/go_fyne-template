@@ -33,9 +33,10 @@ var w size = 400
 var h size = 400
 
 func makeEnv() {
-	black := color.Black
-	label1 := canvas.NewText("Title 1", black)
-	label2 := canvas.NewText("Title 2", black)
+	// black := color.Black
+	white := color.White
+	label1 := canvas.NewText("Title 1", white)
+	label2 := canvas.NewText("Title 2", white)
 	win.SetContent(container.NewHSplit(
 		label1,
 		label2,
@@ -50,7 +51,7 @@ func main() {
 }
 
 func launchApp() {
-	a.Settings().SetTheme(theme.LightTheme())
+	a.Settings().SetTheme(theme.DarkTheme())
 	win.Resize(fyne.NewSize(w, h))
 
 	makeEnv()
