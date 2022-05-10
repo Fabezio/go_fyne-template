@@ -9,9 +9,10 @@ package main
 // package main
 
 import (
+	"fmt"
 	"image/color"
-	"math/rand"
-	"time"
+	"math"
+	"strconv"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
@@ -21,68 +22,53 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-// "fyne.io/fyne/container"
-
-// "log"
-
-// "fyne.io/fyne/v2/container"
-// "fyne.io/fyne/v2/theme"
-
 var title = "fyne tutorial"
 var a = app.New()
 var win = a.NewWindow(title)
 
-var w size = 200
-var h size = 200
+var w size = 400
+var h size = 400
 
 func makeEnv() {
-	lower := "abcdefghijklmnopqrstuvwxyz"
-	upper := "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-	numbers := "1234567890"
-	speChars := "$£@#&§!?"
-	passwdLength := 8
-	genPasswdStr := ""
-	genPasswd := canvas.NewText(genPasswdStr, color.Black)
-	// ceFromURLString("")
-	generator := widget.NewButton("generate Password", func() {
-		genPasswdStr = ""
+	// var height float64
+	// var weight float64
 
-		// genPasswd.Text = ""
-		// genPasswd.Refresh()
-		for n := 0; n < passwdLength; n++ {
-			rand.Seed(time.Now().UnixNano())
-			randNum := rand.Intn(4)
-			// fmt.Println(randNum)
-			switch randNum {
-			case 0:
-				rand.Seed(time.Now().UnixNano())
-				randIndex := rand.Intn(len(lower))
-				genPasswdStr += string(lower[randIndex])
-			case 1:
-				rand.Seed(time.Now().UnixNano())
-				randIndex := rand.Intn(len(upper))
-				genPasswdStr += string(upper[randIndex])
-			case 2:
-				rand.Seed(time.Now().UnixNano())
-				randIndex := rand.Intn(len(numbers))
-				genPasswdStr += string(numbers[randIndex])
-			case 3:
-				rand.Seed(time.Now().UnixNano())
-				randIndex := rand.Intn(len(speChars))
-				genPasswdStr += string(speChars[randIndex])
+	// hStr := ""
+	// wStr := ""
 
-			}
+	msg := canvas.NewText("", color.Black)
+	// fmt.Println(bmi)
+	// input := widget.NewForm(fyne.)
+	hInput := widget.NewEntry()
+	wInput := widget.NewEntry()
+	hInput.SetPlaceHolder("Height?")
+	wInput.SetPlaceHolder("Weight?")
+	bmiCalc := widget.NewButton("Calculate BMI", func() {
+		height, _ := strconv.ParseFloat(hInput.Text, 64)
+		weight, _ := strconv.ParseFloat(wInput.Text, 64)
+		var bmi float64 = weight / (math.Pow(height/100, 2))
+		msg.Text = fmt.Sprintf("%v kg/m2.  ", bmi)
+		msg.Refresh()
+		if bmi <= 24.9 {
+			msg.Text += "U're healthy"
+		} else if bmi <= 29.9 {
+			msg.Text += "U're over weight"
+		} else if bmi <= 34.9 {
+			msg.Text += "U're severely over weight"
+		} else if bmi <= 39.9 {
+			msg.Text += "U're obese"
+		} else {
+			msg.Text += "U're severely obese"
+
 		}
-		genPasswd.Text = genPasswdStr
-		genPasswd.Refresh()
+		msg.Refresh()
+		// fmt.Print("you're done!")
 	})
-
-	// fmt.Println(genPasswdStr)
-
-	// win.SetIcon(r)
 	win.SetContent(container.NewVBox(
-		generator,
-		genPasswd,
+		hInput,
+		wInput,
+		bmiCalc,
+		msg,
 	))
 }
 
