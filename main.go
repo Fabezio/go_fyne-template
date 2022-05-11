@@ -13,6 +13,7 @@ import (
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
+	"fyne.io/fyne/v2/widget"
 
 	"fyne.io/fyne/v2/theme"
 )
@@ -28,13 +29,23 @@ func makeEnv() {
 	// black := color.Black
 	// sub items
 	// new := fyne.NewMenuItem("New", func() { fmt.Println("New file") })
-	// save := fyne.NewMenuItem("Save", func() { fmt.Println("Save file") })
+	appTitle := widget.NewLabel("Welcome")
+	appTitle.TextStyle.Bold = true
+	fmt.Println(appTitle.Alignment)
+	// appTitle.TextStyle. = true
+	save := fyne.NewMenuItem("Save", func() { fmt.Println("Save file") })
+	save.ChildMenu = fyne.NewMenu(
+		"",
+		fyne.NewMenuItem("Save directly", func() { fmt.Println("saved") }),
+		fyne.NewMenuItem("Save as", nil),
+	)
+	// save.ChildMenu = fyne.NewMenu("Save as", nil)
 	// open := fyne.NewMenuItem("Open", nil)
 	// items
 	separator := fyne.NewMenuItemSeparator()
 	file := fyne.NewMenu("File",
 		fyne.NewMenuItem("New", func() { fmt.Println("New file") }),
-		fyne.NewMenuItem("Save", func() { fmt.Println("Save file") }),
+		save,
 		fyne.NewMenuItem("Open", nil),
 		separator,
 		fyne.NewMenuItem("info", func() { fmt.Println("About GO/FYNE") }),
@@ -56,6 +67,7 @@ func makeEnv() {
 	)
 
 	win.SetMainMenu(menu)
+	win.SetContent(appTitle)
 
 }
 
