@@ -12,7 +12,6 @@ import (
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/container"
-	"fyne.io/fyne/v2/data/binding"
 	"fyne.io/fyne/v2/widget"
 
 	"fyne.io/fyne/v2/theme"
@@ -26,16 +25,10 @@ var w size = 500
 var h size = 720
 
 func makeEnv() {
-	// Let create items for accoridan
-	// first argument is title, 2nd is description/details
-	f := 20.0
-	data := binding.BindFloat(&f)
-	slider := widget.NewSliderWithData(0, 100, data)
-	newData := widget.NewLabelWithData(
-		binding.FloatToString(data),
-	)
+	disabledBTN := widget.NewButton("Disabled", nil)
+	disabledBTN.Disable()
 
-	content := container.NewVBox(slider, newData)
+	content := container.NewVBox(disabledBTN)
 	win.SetContent(content)
 }
 
