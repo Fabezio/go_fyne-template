@@ -9,8 +9,11 @@ package main
 // package main
 
 import (
+	colors "fyne-test/helpers"
+
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
+	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/widget"
 
@@ -24,12 +27,34 @@ var win = a.NewWindow(title)
 var w size = 500
 var h size = 720
 
-func makeEnv() {
-	disabledBTN := widget.NewButton("Disabled", nil)
-	disabledBTN.Disable()
+var stdSize = fyne.NewSize(w, h)
 
-	content := container.NewVBox(disabledBTN)
-	win.SetContent(content)
+func makeEnv() {
+	// boxes
+	redRect := canvas.NewRectangle(colors.Red)
+	redRect.SetMinSize(stdSize)
+	// redRect.Text = "red box"
+	blueRect := canvas.NewRectangle(colors.Blue)
+	blueRect.SetMinSize(stdSize)
+
+	// scroller
+	disabledBTN := widget.NewButton("Disabled", nil)
+	// text := canvas.NewText("TEXT TO DISPLAY", color.Black)
+	disabledBTN.Disable()
+	box := container.NewHBox(
+		blueRect,
+		redRect,
+	)
+
+	scroll := container.NewVScroll(
+		box,
+	)
+
+	// scroll direction
+	scroll.Direction = container.ScrollHorizontalOnly
+
+	// content := container.NewVBox(disabledBTN)
+	win.SetContent(scroll)
 }
 
 type size = float32
@@ -43,7 +68,7 @@ func launchApp() {
 
 	win.SetIcon(theme.FyneLogo())
 	// a.Settings().SetTheme(theme.LightTheme())
-	win.Resize(fyne.NewSize(w, h))
+	win.Resize(stdSize)
 	win.CenterOnScreen()
 
 	makeEnv()
