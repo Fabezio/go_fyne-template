@@ -9,10 +9,9 @@ package main
 // package main
 
 import (
-	"fmt"
-
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
+	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/widget"
 
 	"fyne.io/fyne/v2/theme"
@@ -27,48 +26,22 @@ var h size = 720
 
 func makeEnv() {
 	// black := color.Black
-	// sub items
-	// new := fyne.NewMenuItem("New", func() { fmt.Println("New file") })
-	appTitle := widget.NewLabel("Welcome")
-	appTitle.TextStyle.Bold = true
-	fmt.Println(appTitle.Alignment)
-	// appTitle.TextStyle. = true
-	save := fyne.NewMenuItem("Save", func() { fmt.Println("Save file") })
-	save.ChildMenu = fyne.NewMenu(
-		"",
-		fyne.NewMenuItem("Save directly", func() { fmt.Println("saved") }),
-		fyne.NewMenuItem("Save as", nil),
+	paragraphEntry := widget.NewMultiLineEntry()
+	const (
+		loremIpsum = `Eu exercitation pariatur labore deserunt nulla dolore dolore quis sit ad deserunt dolore. Cillum anim non minim excepteur voluptate ex. Id mollit adipisicing officia dolore minim officia culpa aliquip. Ex ipsum ex dolor deserunt ut nisi velit incididunt voluptate sit duis.`
 	)
-	// save.ChildMenu = fyne.NewMenu("Save as", nil)
-	// open := fyne.NewMenuItem("Open", nil)
-	// items
-	separator := fyne.NewMenuItemSeparator()
-	file := fyne.NewMenu("File",
-		fyne.NewMenuItem("New", func() { fmt.Println("New file") }),
-		save,
-		fyne.NewMenuItem("Open", nil),
-		separator,
-		fyne.NewMenuItem("info", func() { fmt.Println("About GO/FYNE") }),
+	// newParagraph := canvas.NewText("", black)
+	paragraphEntry.SetText(loremIpsum)
+	paragraphEntry.Wrapping = fyne.TextTruncate
+	// win.SetMainMenu(menu)
+	// validateParag := widget.NewButton("validate paragraph", func() {
+	// 	// entry, _ := paragraphEntry.
+	// })
+	content := container.NewVBox(
+		paragraphEntry,
+		// validateParag,
 	)
-	edit := fyne.NewMenu("Edit",
-		fyne.NewMenuItem("Undo", func() { fmt.Println("Undo") }),
-		fyne.NewMenuItem("Redo", func() { fmt.Println("Redo") }),
-	)
-
-	// {
-	// 	Label: "File",
-	// 	Items: nil,
-	// }
-	// menu
-	menu := fyne.NewMainMenu(
-		file,
-		edit,
-		// today,
-	)
-
-	win.SetMainMenu(menu)
-	win.SetContent(appTitle)
-
+	win.SetContent(content)
 }
 
 type size = float32
