@@ -11,6 +11,8 @@ package main
 import (
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
+	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/data/binding"
 	"fyne.io/fyne/v2/widget"
 
 	"fyne.io/fyne/v2/theme"
@@ -26,14 +28,15 @@ var h size = 720
 func makeEnv() {
 	// Let create items for accoridan
 	// first argument is title, 2nd is description/details
-	item1 := widget.NewAccordionItem("A",
-		widget.NewLabel("A for Apple"))
-	item2 := widget.NewAccordionItem("B",
-		widget.NewLabel("B for Ball"))
-	item3 := widget.NewAccordionItem("C",
-		widget.NewLabel("C for Cat"))
-	ac := widget.NewAccordion(item1, item2, item3)
-	win.SetContent(ac)
+	f := 20.0
+	data := binding.BindFloat(&f)
+	slider := widget.NewSliderWithData(0, 100, data)
+	newData := widget.NewLabelWithData(
+		binding.FloatToString(data),
+	)
+
+	content := container.NewVBox(slider, newData)
+	win.SetContent(content)
 }
 
 type size = float32
