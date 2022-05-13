@@ -11,12 +11,15 @@ package main
 import (
 	colors "fyne-test/helpers"
 	"image/color"
+	"io/ioutil"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/layout"
+	"fyne.io/fyne/v2/storage"
 	"fyne.io/fyne/v2/widget"
 
 	"fyne.io/fyne/v2/theme"
@@ -26,7 +29,7 @@ var title = "fyne tutorial"
 var a = app.New()
 var win = a.NewWindow(title)
 
-var w size = 500
+var w size = 1360
 var h size = 720
 
 var stdSize = fyne.NewSize(w, h)
@@ -35,24 +38,38 @@ func makeEnv() {
 	// boxes
 
 	win.SetContent(container.NewVBox(
-		coloredButton("About", colors.Blue),
-		coloredButton("Submit", colors.Orange),
-		coloredButton("Reset", colors.Red),
-		coloredButton("Reach",
-			color.NRGBA{R: 0, G: 255, B: 255, A: 127}),
+		coloredButton("open .txt files", colors.Green),
 	))
 }
 
 type size = float32
 
 func main() {
-	colors.Colors()
+	// colors.Colors()
 	launchApp()
 
 }
 
 func coloredButton(text string, colorName color.NRGBA) *fyne.Container {
-	btn := widget.NewButton(text, nil)
+	btn := widget.NewButton(text, func() {
+		fileDialog := dialog.NewFileOpen(
+			func(r fyne.URIReadCloser, _ error) {
+				data, _ := ioutil.ReadAll(r)
+				result := fyne.NewStaticResource("name", data)
+				entry := widget.NewMultiLineEntry()
+				entry.SetText(string(result.StaticContent))
+				win := fyne.CurrentApp().NewWindow(
+					string(result.StaticName))
+				win.Resize(stdSize)
+				win.SetContent(container.NewScroll(entry))
+				win.Show()
+
+			}, win)
+		fileDialog.SetFilter(
+			storage.NewExtensionFileFilter([]string{".txt"}))
+		fileDialog.Show()
+		fileDialog.Resize(stdSize)
+	})
 
 	btnColor := canvas.NewRectangle(colorName)
 
@@ -73,5 +90,6 @@ func launchApp() {
 	win.CenterOnScreen()
 
 	makeEnv()
-	win.ShowAndRun()
+	win.Show()
+	a.Run()
 }
