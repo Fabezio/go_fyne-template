@@ -10,11 +10,13 @@ package main
 
 import (
 	colors "fyne-test/helpers"
+	"image/color"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/widget"
 
 	"fyne.io/fyne/v2/theme"
@@ -31,37 +33,36 @@ var stdSize = fyne.NewSize(w, h)
 
 func makeEnv() {
 	// boxes
-	redRect := canvas.NewRectangle(colors.Red)
-	redRect.SetMinSize(stdSize)
-	// redRect.Text = "red box"
-	blueRect := canvas.NewRectangle(colors.Blue)
-	blueRect.SetMinSize(stdSize)
 
-	// scroller
-	disabledBTN := widget.NewButton("Disabled", nil)
-	// text := canvas.NewText("TEXT TO DISPLAY", color.Black)
-	disabledBTN.Disable()
-	box := container.NewHBox(
-		blueRect,
-		redRect,
-	)
-
-	scroll := container.NewVScroll(
-		box,
-	)
-
-	// scroll direction
-	scroll.Direction = container.ScrollHorizontalOnly
-
-	// content := container.NewVBox(disabledBTN)
-	win.SetContent(scroll)
+	win.SetContent(container.NewVBox(
+		coloredButton("About", colors.Blue),
+		coloredButton("Submit", colors.Orange),
+		coloredButton("Reset", colors.Red),
+		coloredButton("Reach",
+			color.NRGBA{R: 0, G: 255, B: 255, A: 127}),
+	))
 }
 
 type size = float32
 
 func main() {
+	colors.Colors()
 	launchApp()
 
+}
+
+func coloredButton(text string, colorName color.NRGBA) *fyne.Container {
+	btn := widget.NewButton(text, nil)
+
+	btnColor := canvas.NewRectangle(colorName)
+
+	container := container.New(
+		layout.NewMaxLayout(),
+		btnColor,
+		btn,
+	)
+
+	return container
 }
 
 func launchApp() {

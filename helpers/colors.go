@@ -1,6 +1,9 @@
 package colors
 
-import "image/color"
+import (
+	"fmt"
+	"image/color"
+)
 
 const max = 255
 
@@ -17,3 +20,8 @@ var Cyan = color.NRGBA{R: 0, G: max, B: max, A: max}
 var Orange = color.NRGBA{R: max, G: 165, B: 0, A: max}
 var Yellow = color.NRGBA{R: max, G: max, B: 0, A: max}
 var Amethyst = color.NRGBA{R: 153, G: 102, B: 204, A: max}
+
+func Colors() {
+	fmt.Printf("%T\n", Red)
+
+}
